@@ -11,7 +11,7 @@ st_rate AS (
 	GROUP BY r.speech_therapist_id
 )
 
-SELECT c.surname, c.first_name, c.patronymic, c.phone, str.round
+SELECT c.surname, c.first_name, c.patronymic, c.birthday, c.phone, str.round
 FROM clients c, speech_therapists st
 JOIN st_rate str ON st.id = str.speech_therapist_id
 WHERE c.id = st.client_id
