@@ -15,8 +15,9 @@ c_all AS (
 	WHERE conc.sum = conm.max
 )
 
-SELECT c.surname, c.first_name, c.patronymic, c.phone
+SELECT c.surname, c.first_name, c.patronymic, c.birthday, c.phone, ca.sum
 FROM clients c
+JOIN c_all ca ON c.id = ca.client_id
 WHERE c.id IN (
 	SELECT client_id
 	FROM c_all
