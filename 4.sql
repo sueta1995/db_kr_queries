@@ -20,7 +20,7 @@ st_max AS (
 	)
 )
 
-SELECT c.surname, c.first_name, c.patronymic, c.phone, stm.sum
+SELECT c.surname, c.first_name, c.patronymic, c.birthday, c.phone, stm.sum
 FROM st_max stm
 JOIN speech_therapists st ON st.id = stm.speech_therapist_id
 JOIN clients c ON c.id = st.client_id
