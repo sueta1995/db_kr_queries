@@ -1,22 +1,22 @@
-WITH s_count AS (
-	SELECT st.id, count(s.speech_therapist_id)
-	FROM speech_therapists st, services s
-	WHERE st.id = s.speech_therapist_id
-	GROUP BY st.id
+WITH con_services AS (
+	SELECT con.service_id, COUNT(con.id)
+	FROM contracts con
+	GROUP BY con.service_id
 ),
 
-st_rate AS (
-	SELECT r.speech_therapist_id, ROUND(AVG(r.count), 2)
-	FROM rates r
-	GROUP BY r.speech_therapist_id
+ser_types AS (
+	SELECT t.name, cs.count
+	FROM con_services cs
+	JOIN services s ON s.id = cs.service_id
+	JOIN types t ON t.id = s.type_id
+),
+
+max_types AS (
+	SELECT st.name, sum(st.count)
+	FROM ser_types st
+	GROUP BY st.name
+	ORDER BY sum(st.count) DESC
 )
 
-SELECT c.surname, c.first_name, c.patronymic, c.birthday, c.phone, str.round
-FROM clients c, speech_therapists st
-JOIN st_rate str ON st.id = str.speech_therapist_id
-WHERE c.id = st.client_id
-AND st.id IN (
-	SELECT MAX(count)
-	FROM s_count
-	GROUP BY id
-)
+SELECT *
+FROM max_types
