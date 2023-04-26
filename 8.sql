@@ -6,4 +6,3 @@ JOIN services s ON con.service_id = s.id
 JOIN children ch ON con.child_id = ch.id
 JOIN types t ON s.type_id = t.id
 WHERE st.job_end IS NOT NULL
-
